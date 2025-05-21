@@ -1,5 +1,6 @@
 "use client";
 import { ArrowLeft, HeartPulse } from "lucide-react";
+import Image from "next/image";
 
 export default function ChatHeader({ onBack }: { onBack?: () => void }) {
   return (
@@ -8,7 +9,13 @@ export default function ChatHeader({ onBack }: { onBack?: () => void }) {
         <ArrowLeft size={24} />
       </button>
       <div className="flex-1 flex justify-center">
-        <HeartPulse size={36} color="#57ABFF" />
+           <Image
+                  src="/abrazo.png"
+                  alt="Logo"
+                  width={46}
+                  height={46}
+                  className="rounded-full"/>
+        {/* <HeartPulse size={36} color="#57ABFF" /> */}
       </div>
     </div>
   );
