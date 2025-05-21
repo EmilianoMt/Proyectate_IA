@@ -1,4 +1,5 @@
 import { HeartPulse, LogOut } from "lucide-react";
+import Image from "next/image";
 
 interface HeaderProps {
   userName: string;
@@ -7,9 +8,15 @@ interface HeaderProps {
 
 export default function Header({ userName, onLogout }: HeaderProps) {
   return (
-    <header className="w-full flex items-center justify-between bg-[#262626] px-8 py-3">
+    <header className="w-full flex items-center justify-between bg-[#282828] px-8 py-3">
       <div className="flex items-center gap-2">
-        <HeartPulse size={36} color="#57ABFF" />
+        <Image
+          src="/abrazo.png"
+          alt="Logo"
+          width={45}
+          height={45}
+          className="rounded-full"/>
+        {/* <HeartPulse size={36} color="#57ABFF" /> */}
         <span className="text-white font-semibold text-2xl">Proyéctate 2025</span>
       </div>
       <div className="flex items-center gap-6">
