@@ -1,4 +1,4 @@
-import { HeartPulse, LogOut, User } from "lucide-react";
+import { HeartPulse, LogOut } from "lucide-react";
 
 interface HeaderProps {
   userName: string;

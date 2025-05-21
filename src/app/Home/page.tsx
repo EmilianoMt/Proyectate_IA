@@ -14,12 +14,12 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-8 items-center w-[80vh] h=[100vh]">
           <div className="flex flex-row gap-8">
-            <OptionCard color="red" title="¿Cómo te sientes hoy?" to="" />
-            <OptionCard color="yellow" title="Mi Psicólogo virtual" to="" />
+            <OptionCard color="red" title="¿Cómo te sientes hoy?" to="/Chat" />
+            <OptionCard color="yellow" title="Mi Psicólogo virtual" to="/Chat" />
           </div>
           <div className="flex flex-row gap-8">
-            <OptionCard color="purple" title="Ayuda profesional" to="" />
-            <OptionCard color="green" title="Mi día a día" to="" />
+            <OptionCard color="purple" title="Ayuda profesional" to="/Chat" />
+            <OptionCard color="green" title="Mi día a día" to="/Chat" />
           </div>
         </div>
       </div>
