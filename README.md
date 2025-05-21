@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🚀 Como ejecutar el proyecto
 
-## Getting Started
+Pasos para ejecutar el proyecto de manera adecuada
 
-First, run the development server:
+### 1. Clona el repositorio
+
+```bash
+git clone https://github.com/EmilianoMt/Proyectate_IA.git
+cd Proyectate_IA
+```
+
+### 2. Instala las dependencias
+
+```bash
+npm install
+# o
+yarn install
+```
+
+### 3. Configura las variables de entorno
+
+Copia el archivo `.env.example` a `.env` y completa los valores necesarios
+
+```bash
+cp .env.example .env
+```
+
+### 4. Levanta la base de datos con Docker
+
+Asegúrate de tener Docker instalado y ejecuta:
+
+```bash
+docker-compose up -d
+```
+
+Esto iniciará un contenedor de PostgreSQL con los datos de tu archivo `.env`.
+
+### 5. Ejecuta las migraciones de Prisma
+
+Esto creará las tablas necesarias en la base de datos:
+
+```bash
+npx prisma migrate dev
+```
+
+### 6. Genera el cliente de Prisma
+
+```bash
+npx prisma generate
+```
+
+### 7. Inicia el servidor de desarrollo
 
 ```bash
 npm run dev
-# or
+# o
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre [http://localhost:3000](http://localhost:3000) para ver la aplicación.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Notas:**
+- Si agregas nuevos modelos en `prisma/schema.prisma`, recuerda ejecutar nuevamente los comandos de migración y generación de Prisma.
+- No olvides que la carpeta `src/generated/` y tu archivo `.env` no deben subirse a git.
 
-## Learn More
+---
+```## 🚀 Puesta en marcha del proyecto
 
-To learn more about Next.js, take a look at the following resources:
+Sigue estos pasos después de clonar el repositorio para tener el proyecto funcionando en tu máquina local:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 1. Clona el repositorio
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+git clone https://github.com/tu-usuario/tu-repo.git
+cd tu-repo
+```
 
-## Deploy on Vercel
+### 2. Instala las dependencias
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm install
+# o
+yarn install
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 3. Configura las variables de entorno
+
+Copia el archivo `.env.example` a `.env` y completa los valores necesarios (como la cadena de conexión a la base de datos):
+
+```bash
+cp .env.example .env
+```
+
+### 4. Levanta la base de datos con Docker
+
+Asegúrate de tener Docker instalado y ejecuta:
+
+```bash
+docker-compose up -d
+```
+
+Esto iniciará un contenedor de PostgreSQL con los datos del archivo `.env`.
+
+### 5. Ejecuta las migraciones de Prisma
+
+Esto creará las tablas necesarias en la base de datos:
+
+```bash
+npx prisma migrate dev
+```
+
+### 6. Genera el cliente de Prisma
+
+```bash
+npx prisma generate
+```
+
+### 7. Inicia el servidor de desarrollo
+
+```bash
+npm run dev
+# o
+yarn dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000) para ver la aplicación.
+
+---
+
+**Notas:**
+- Si agregas nuevos modelos en `prisma/schema.prisma`, recuerda ejecutar nuevamente los comandos de migración y generación de Prisma.
+
+---
