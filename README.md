@@ -63,13 +63,5 @@ Abre [http://localhost:3000](http://localhost:3000) para ver la aplicación.
 
 **Notas:**
 - Si agregas nuevos modelos en `prisma/schema.prisma`, recuerda ejecutar nuevamente los comandos de migración y generación de Prisma.
-- No olvides que la carpeta `src/generated/` y tu archivo `.env` no deben subirse a git.
-
----
-
----
-
-**Notas:**
-- Si agregas nuevos modelos en `prisma/schema.prisma`, recuerda ejecutar nuevamente los comandos de migración y generación de Prisma.
 
 ---
