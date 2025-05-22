@@ -18,7 +18,7 @@ export default function QuizNote({
         <h3 className="text-lg text-black font-semibold mb-2">Algo más por decir (Opcional)</h3>
         <h2 className="text-2xl text-gray-800 font-bold mb-6">Deja una nota para ti</h2>
         <textarea
-          className="w-full border border-gray-400 rounded-md p-2 text-sm resize-none mb-2"
+          className="w-full border text-black border-gray-400 rounded-md p-2 text-sm resize-none mb-2"
           rows={5}
           maxLength={300}
           value={note}

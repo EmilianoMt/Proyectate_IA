@@ -20,12 +20,29 @@ const questions: string[] = [
   "¿Te sentiste en calma y relajado(a)?",
   "¿Tuviste pensamientos negativos recurrentes?",
   "¿Te sentiste capaz de manejar tus emociones hoy?",
-  "¿Te sorprendió algo de manera positiva o negativa hoy?"
+  "¿Te sorprendió algo de manera positiva o negativa hoy?",
 ];
 
+function getMainEmotion(answers: number[]) {
+  const labels = [
+    "Felicidad",
+    "Tristeza",
+    "Ansiedad",
+    "Preocupación",
+    "Sorpresa",
+    "Enojo",
+  ];
+  const maxIndex = answers.reduce(
+    (maxIdx, val, idx, arr) => (val > arr[maxIdx] ? idx : maxIdx),
+    0
+  );
+  return labels[maxIndex];
+}
 
 export default function QuizPage() {
-  const [step, setStep] = useState<"loading" | "start" | number | "note" | "result">("loading");
+  const [step, setStep] = useState<
+    "loading" | "start" | number | "note" | "result"
+  >("loading");
   const [answers, setAnswers] = useState<number[]>([]);
   const [note, setNote] = useState("");
   const [quizData, setQuizData] = useState<any>(null);
@@ -33,8 +50,8 @@ export default function QuizPage() {
   // Al cargar, consulta si ya hay quiz hoy
   useEffect(() => {
     fetch("/api/quiz", { credentials: "include" })
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.quiz) {
           setQuizData(data.quiz);
           setStep("result");
@@ -46,18 +63,20 @@ export default function QuizPage() {
 
   // Guardar quiz al finalizar
   const handleFinish = async () => {
+    const mainEmotion = getMainEmotion(answers);
     const res = await fetch("/api/quiz", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ answers, note }),
+      body: JSON.stringify({ answers, note, mainEmotion }),
     });
     const data = await res.json();
     setQuizData(data.quiz);
     setStep("result");
   };
 
-  if (step === "loading") return <div className="text-center py-20">Cargando...</div>;
+  if (step === "loading")
+    return <div className="text-center py-20">Cargando...</div>;
   if (step === "start") return <QuizStart onStart={() => setStep(1)} />;
   if (step === "note")
     return (
