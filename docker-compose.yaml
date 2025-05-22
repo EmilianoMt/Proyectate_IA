@@ -1,14 +1,11 @@
-version: '3'
-
 services:
   db:
-    image: postgres:14.3
+    image: mongo:5
     restart: always
     ports:
-      - "5432:5432"
+      - 27017:27017
     environment:
-      POSTGRES_PASSWORD: ${PASS}
-      POSTGRES_DB: ${NAME}
-    container_name: api_IA_Proyectate
+      MONGO_INITDB_DATABASE: ProyectateIA2025
+    command: ["--replSet", "rs0", "--bind_ip_all"]
     volumes:
-      - ./postgres:/var/lib/postgresql/data
+      - ./mongo:/data/db
