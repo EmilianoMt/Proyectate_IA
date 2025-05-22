@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { registerUser } from "@/app/Register/action";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const router = useRouter();
 
   async function action(formData: FormData) {
     setServerError(null);
@@ -16,6 +18,9 @@ export default function RegisterForm() {
       setServerError(res.error);
     } else {
       setSuccess("¡Registro exitoso! Ahora puedes iniciar sesión.");
+      setTimeout(() => {
+        router.push("/Login");
+      }, 2000);
     }
   }
 
@@ -34,7 +39,7 @@ export default function RegisterForm() {
               type="text"
               name="name"
               placeholder="Nombre"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="text-black mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -46,7 +51,7 @@ export default function RegisterForm() {
               type="text"
               name="lastName"
               placeholder="Apellido"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="text-black mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -60,7 +65,7 @@ export default function RegisterForm() {
               type="email"
               name="email"
               placeholder="example@gmail.com"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="text-black mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -72,7 +77,7 @@ export default function RegisterForm() {
               type="tel"
               name="phoneNumber"
               placeholder="Ingrese un número de teléfono"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="text-black mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -86,7 +91,7 @@ export default function RegisterForm() {
               type="password"
               name="password"
               placeholder="Ingrese una contraseña"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="text-black mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -98,7 +103,7 @@ export default function RegisterForm() {
               type="password"
               name="confirmPassword"
               placeholder="Confirme su contraseña"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="text-black mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
               required
             />
           </div>
@@ -106,9 +111,7 @@ export default function RegisterForm() {
         {serverError && (
           <div className="text-red-500 text-center">{serverError}</div>
         )}
-        {success && (
-          <div className="text-green-600 text-center">{success}</div>
-        )}
+        {success && <div className="text-green-600 text-center">{success}</div>}
         <div className="flex justify-center">
           <button
             type="submit"
