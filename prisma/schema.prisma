@@ -46,4 +46,5 @@ model Quiz {
   date      DateTime @default(now())
   answers   Json     // Guarda las respuestas como array de números
   note      String?
+  mainEmotion  String? 
 }

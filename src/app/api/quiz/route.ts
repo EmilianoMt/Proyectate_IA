@@ -48,12 +48,13 @@ export async function POST(request: Request) {
   });
   if (existing) return NextResponse.json({ error: "Ya existe quiz hoy" }, { status: 409 });
 
-  const { answers, note } = await request.json();
+  const { answers, note, mainEmotion } = await request.json();
   const quiz = await prisma.quiz.create({
     data: {
       userId,
       answers,
       note,
+      mainEmotion, 
     },
   });
   return NextResponse.json({ quiz });
