@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { loginUser } from "@/app/Login/action";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -13,20 +12,19 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-
-    const result = await loginUser(formData);
-
-    if (result.error) {
-      setError(result.error);
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data.error || "Error al iniciar sesión.");
     } else {
       router.push("/Home");
     }
   };
-
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg border border-blue-300 w-full max-w-md">
       <h2 className="text-4xl font-bold mb-6 text-black">
