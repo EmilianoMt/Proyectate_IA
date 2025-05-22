@@ -16,10 +16,22 @@ type OptionCardProps = {
 };
 
 const colorVariants = {
-  red: "bg-[#F0626E]",
-  yellow: "bg-[#FBC16A]",
-  purple: "bg-[#8B8DF7]",
-  green: "bg-[#3ED7B6]",
+  red: {
+    default: "bg-[#F0626E]",
+    hover: "hover:bg-[#7C2929]",
+  },
+  yellow: {
+    default: "bg-[#FBC16A]",
+    hover: "hover:bg-[#7E5013]",
+  },
+  purple: {
+    default: "bg-[#8B8DF7]",
+    hover: "hover:bg-[#282A6D]",
+  },
+  green: {
+    default: "bg-[#3ED7B6]",
+    hover: "hover:bg-[#0C644F]",
+  },
 };
 
 export default function OptionCard({
@@ -46,7 +58,7 @@ export default function OptionCard({
   return (
     <Link
       href={to}
-      className={`relative flex flex-col justify-between w-[260px] h-[160px] p-6 rounded-2xl shadow-md transition-transform hover:scale-105 active:scale-95 ${colorVariants[color]}`}
+      className={`relative flex flex-col justify-between w-[260px] h-[160px] p-6 rounded-2xl shadow-md transition-transform hover:scale-105 active:scale-95 ${colorVariants[color].default} ${colorVariants[color].hover}`}
       style={{ textDecoration: "none" }}
     >
       <div>
