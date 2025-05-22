@@ -30,7 +30,7 @@ export default function HomeClient({ userName }: { userName: string }) {
       </div>
       <div className="flex flex-col gap-8 items-center w-[80vh] h=[100vh]">
         <div className="flex flex-row gap-8">
-          <OptionCard color="red" title="¿Cómo te sientes hoy?" to="/Chat" />
+          <OptionCard color="red" title="¿Cómo te sientes hoy?" to="/Quiz" />
           <OptionCard
             color="yellow"
             title="Mi Psicólogo virtual"
