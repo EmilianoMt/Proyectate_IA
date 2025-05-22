@@ -2,27 +2,29 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { registerUser } from "@/app/Register/action";
 
 export default function RegisterForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Aquí iría la lógica para iniciar sesión
-    console.log({ email, password, name, lastName, phone });
-  };
+  async function action(formData: FormData) {
+    setServerError(null);
+    setSuccess(null);
+    const res = await registerUser(formData);
+    if (res?.error) {
+      setServerError(res.error);
+    } else {
+      setSuccess("¡Registro exitoso! Ahora puedes iniciar sesión.");
+    }
+  }
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-lg border border-blue-300 w-full max-w-[120vh]">
       <h2 className="text-4xl text-center font-bold mb-6 text-black">
         Regístrate
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-8 w-full">
+      <form action={action} className="space-y-8 w-full">
         <div className="w-full flex flex-row gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700">
@@ -30,10 +32,9 @@ export default function RegisterForm() {
             </label>
             <input
               type="text"
+              name="name"
               placeholder="Nombre"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -43,10 +44,9 @@ export default function RegisterForm() {
             </label>
             <input
               type="text"
+              name="lastName"
               placeholder="Apellido"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
               required
             />
           </div>
@@ -58,10 +58,9 @@ export default function RegisterForm() {
             </label>
             <input
               type="email"
+              name="email"
               placeholder="example@gmail.com"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
@@ -71,10 +70,9 @@ export default function RegisterForm() {
             </label>
             <input
               type="tel"
+              name="phoneNumber"
               placeholder="Ingrese un número de teléfono"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
               required
             />
           </div>
@@ -86,10 +84,9 @@ export default function RegisterForm() {
             </label>
             <input
               type="password"
+              name="password"
               placeholder="Ingrese una contraseña"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
@@ -99,14 +96,19 @@ export default function RegisterForm() {
             </label>
             <input
               type="password"
+              name="confirmPassword"
               placeholder="Confirme su contraseña"
               className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
           </div>
         </div>
+        {serverError && (
+          <div className="text-red-500 text-center">{serverError}</div>
+        )}
+        {success && (
+          <div className="text-green-600 text-center">{success}</div>
+        )}
         <div className="flex justify-center">
           <button
             type="submit"
