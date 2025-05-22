@@ -1,15 +1,17 @@
-"use client";
 import Header from "@/components/Home/Header";
 import OptionCard from "@/components/Home/OptionCard";
+import { getUserNameFromCookie } from "./action";
 
-const Home = () => {
+export default async function Home() {
+  const userName = await getUserNameFromCookie();
+
   return (
     <>
-      <Header userName="Nombre de ejemplo..."/>
+      <Header userName={userName ?? "Invitado"} />
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="flex gap-12">
           <h1 className="text-4xl font-bold mb-6 text-white">
-            ¡Bienvenido, {"usuario"}!
+            ¡Bienvenido, {userName ?? "usuario"}!
           </h1>
         </div>
         <div className="flex flex-col gap-8 items-center w-[80vh] h=[100vh]">
@@ -25,5 +27,4 @@ const Home = () => {
       </div>
     </>
   );
-};
-export default Home;
+}
