@@ -1,5 +1,5 @@
 "use client";
-import { Mic, ArrowUp } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 export default function ChatInput({
   value,
@@ -18,20 +18,16 @@ export default function ChatInput({
           placeholder="¿En qué podemos ayudarte?"
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && onSend()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") onSend();
+          }}
         />
         <button
           type="button"
-          className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#6A6A6A] transition"
-          tabIndex={-1}
-        >
-          <Mic size={18} color="#fff" />
-        </button>
-        <button
           onClick={onSend}
-          className="w-8 h-8 flex items-center justify-center rounded-full bg-[#EDEDED] hover:bg-[#d1d1d1] transition"
+          className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#6A6A6A] transition"
         >
-          <ArrowUp size={18} color="#222" />
+          <ArrowUp size={18} color="#fff" />
         </button>
       </div>
     </div>

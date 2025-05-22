@@ -26,7 +26,7 @@ export default function ChatMessages({
               {msg.text}
             </div>
           ) : (
-            <div className="max-w-[80%] text-sm text-[#F5F5F5] whitespace-pre-line">
+            <div className="max-w-[80%] text-sm text-[#F5F5F5] whitespace-pre-line px-4 py-2">
               {msg.text}
             </div>
           )}

@@ -6,13 +6,14 @@ import {
   CircleArrowRight,
   Drama,
 } from "lucide-react";
-import Link from "next/link";
 
 type OptionCardProps = {
   color: "red" | "yellow" | "purple" | "green";
   title: string;
   description?: string;
-  to: string;
+  to?: string;
+  onClick?: () => void;
+  loading?: boolean;
 };
 
 const colorVariants = {
@@ -39,6 +40,8 @@ export default function OptionCard({
   title,
   description,
   to,
+  onClick,
+  loading,
 }: OptionCardProps) {
   const getIcon = () => {
     switch (color) {
@@ -55,11 +58,22 @@ export default function OptionCard({
     }
   };
 
+  const handleClick = () => {
+    if (loading) return;
+    if (onClick) {
+      onClick();
+    } else if (to) {
+      window.location.href = to;
+    }
+  };
+
   return (
-    <Link
-      href={to}
+    <button
+      type="button"
+      onClick={handleClick}
+      disabled={loading}
       className={`relative flex flex-col justify-between w-[260px] h-[160px] p-6 rounded-2xl shadow-md transition-transform hover:scale-105 active:scale-95 ${colorVariants[color].default} ${colorVariants[color].hover}`}
-      style={{ textDecoration: "none" }}
+      style={{ textDecoration: "none", opacity: loading ? 0.7 : 1, cursor: loading ? "not-allowed" : "pointer" }}
     >
       <div>
         <h1 className="text-2xl font-semibold text-white mb-2">{title}</h1>
@@ -69,6 +83,11 @@ export default function OptionCard({
       <div className="absolute bottom-4 right-4 flex items-center justify-center w-8 h-8 rounded-full border border-white">
         <CircleArrowRight size={24} color="#fff" />
       </div>
-    </Link>
+      {loading && (
+        <span className="absolute inset-0 flex items-center justify-center text-white text-lg font-bold bg-black/30">
+          ...
+        </span>
+      )}
+    </button>
   );
 }
