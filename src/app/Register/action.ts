@@ -1,8 +1,5 @@
 "use server";
 
-import prisma from "@/libs/db";
-import bcrypt from "bcryptjs";
-
 export async function registerUser(formData: FormData) {
   const email = formData.get("email") as string;
   const name = formData.get("name") as string;
@@ -19,19 +16,19 @@ export async function registerUser(formData: FormData) {
     return { error: "Las contraseñas no coinciden." };
   }
 
-  const existingUser = await prisma.user.findUnique({ where: { email } });
-  if (existingUser) {
-    return { error: "El correo ya está registrado." };
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/register`, {
+      method: "POST",
+      body: JSON.stringify({ email, name, lastName, phoneNumber, password }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+    if (!res.ok) {
+      return { error: data.error || "Error al registrar usuario." };
+    }
+    return { user: data };
+  } catch {
+    return { error: "Error en el servidor." };
   }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const user = await prisma.user.create({
-    data: { email, name, lastName, phoneNumber, password: hashedPassword },
-  });
-
-  // No devuelvas la contraseña
-  const { password: _, ...userWithoutPassword } = user;
-
-  return { success: true, user: userWithoutPassword };
 }
