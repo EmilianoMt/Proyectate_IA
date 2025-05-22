@@ -33,23 +33,16 @@ Asegúrate de tener Docker instalado y ejecuta:
 docker-compose up -d
 ```
 
-Esto iniciará un contenedor de PostgreSQL con los datos de tu archivo `.env`.
+Esto iniciará un contenedor de MongoDB con los datos del archivo `.env`.
 
-### 5. Ejecuta las migraciones de Prisma
 
-Esto creará las tablas necesarias en la base de datos:
-
-```bash
-npx prisma migrate dev
-```
-
-### 6. Genera el cliente de Prisma
+### 5. Genera el cliente de Prisma
 
 ```bash
 npx prisma generate
 ```
 
-### 7. Inicia el servidor de desarrollo
+### 6. Inicia el servidor de desarrollo
 
 ```bash
 npm run dev

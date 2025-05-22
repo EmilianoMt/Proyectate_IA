@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/db";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    console.log(body);
     const { email, password } = body;
 
     if (!email || !password) {
@@ -22,8 +22,22 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Credenciales inválidas." }, { status: 401 });
     }
 
-    const { password: _, ...userWithoutPassword } = user;
-    return NextResponse.json(userWithoutPassword, { status: 200 });
+    const payload = { userId: user.id, email: user.email };
+    const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: "7d" });
+
+    const response = NextResponse.json(
+      { user: { ...user, password: undefined } },
+      { status: 200 }
+    );
+    response.cookies.set("Auth_psiq", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
+    return response;
   } catch (error) {
     return NextResponse.json({ error: "Error en el servidor." }, { status: 500 });
   }
