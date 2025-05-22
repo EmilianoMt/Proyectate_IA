@@ -1,52 +1,14 @@
-"use client";
-
 import Header from "@/components/Home/Header";
-import OptionCard from "@/components/Home/OptionCard";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { getUserNameFromCookie } from "./action";
+import HomeClient from "@/components/Home/HomeCLient";
 
-export default function Home({ userName }: { userName?: string }) {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-
-  const handleCreateChat = async () => {
-    setLoading(true);
-    const res = await fetch("/api/chat", {
-      method: "POST",
-      credentials: "include",
-    });
-    const data = await res.json();
-    setLoading(false);
-    if (data.chatId) {
-      router.push(`/Chat/${data.chatId}`);
-    }
-  };
+export default async function Home() {
+  const userName = await getUserNameFromCookie();
 
   return (
     <>
       <Header userName={userName ?? "Invitado"} />
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="flex gap-12">
-          <h1 className="text-4xl font-bold mb-6 text-white">
-            ¡Bienvenido, {userName ?? "usuario"}!
-          </h1>
-        </div>
-        <div className="flex flex-col gap-8 items-center w-[80vh] h=[100vh]">
-          <div className="flex flex-row gap-8">
-            <OptionCard color="red" title="¿Cómo te sientes hoy?" to="/Chat" />
-            <OptionCard
-              color="yellow"
-              title="Mi Psicólogo virtual"
-              onClick={handleCreateChat}
-              loading={loading}
-            />
-          </div>
-          <div className="flex flex-row gap-8">
-            <OptionCard color="purple" title="Ayuda profesional" to="/Chat" />
-            <OptionCard color="green" title="Mi día a día" to="/Chat" />
-          </div>
-        </div>
-      </div>
+      <HomeClient userName={userName ?? "Invitado"} />
     </>
   );
 }

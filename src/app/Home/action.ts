@@ -12,6 +12,7 @@ export async function getUserNameFromCookie() {
   try {
     const { payload } = await jwtVerify(token, secret);
     const name = payload.name as string;
+    console.log("name", name);
     const lastName = payload.lastName as string;
     return `${name} ${lastName}`;
   } catch {
