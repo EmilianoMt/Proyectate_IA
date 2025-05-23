@@ -39,7 +39,7 @@ export default function HomeClient({ userName }: { userName: string }) {
           />
         </div>
         <div className="flex flex-row gap-8">
-          <OptionCard color="purple" title="Ayuda profesional" to="/Chat" />
+          <OptionCard color="purple" title="Ayuda profesional" to="/Contact" />
           <OptionCard color="green" title="Mi día a día" to="/History" />
         </div>
       </div>
