@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { registerUser } from "@/app/Register/action";
 import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
@@ -10,17 +9,45 @@ export default function RegisterForm() {
   const [success, setSuccess] = useState<string | null>(null);
   const router = useRouter();
 
-  async function action(formData: FormData) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     setServerError(null);
     setSuccess(null);
-    const res = await registerUser(formData);
-    if (res?.error) {
-      setServerError(res.error);
-    } else {
-      setSuccess("¡Registro exitoso! Ahora puedes iniciar sesión.");
-      setTimeout(() => {
-        router.push("/Login");
-      }, 2000);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const name = formData.get("name") as string;
+    const lastName = formData.get("lastName") as string;
+    const phoneNumber = formData.get("phoneNumber") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (!email || !name || !lastName || !phoneNumber || !password || !confirmPassword) {
+      setServerError("Todos los campos son obligatorios.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setServerError("Las contraseñas no coinciden.");
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ email, name, lastName, phoneNumber, password }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setServerError(data.error || "Error al registrar usuario.");
+      } else {
+        setSuccess("¡Registro exitoso! Ahora puedes iniciar sesión.");
+        setTimeout(() => {
+          router.push("/Login");
+        }, 2000);
+      }
+    } catch {
+      setServerError("Error en el servidor.");
     }
   }
 
@@ -29,7 +56,7 @@ export default function RegisterForm() {
       <h2 className="text-4xl text-center font-bold mb-6 text-black">
         Regístrate
       </h2>
-      <form action={action} className="space-y-8 w-full">
+      <form onSubmit={handleSubmit} className="space-y-8 w-full">
         <div className="w-full flex flex-row gap-4">
           <div className="flex-1">
             <label className="block text-sm font-medium text-gray-700">
