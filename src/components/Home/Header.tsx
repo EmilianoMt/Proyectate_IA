@@ -25,7 +25,7 @@ export default function Header({ userName }: HeaderProps) {
           height={45}
           className="rounded-full"
         />
-        <span className="text-white font-semibold text-2xl">Proyéctate 2025</span>
+        <span className="text-white font-semibold text-2xl">Future Health</span>
       </div>
       <div className="flex items-center gap-6">
         <span className="text-white text-sm font-bold">{userName}</span>
