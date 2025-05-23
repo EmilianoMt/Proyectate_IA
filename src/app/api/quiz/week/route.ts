@@ -36,10 +36,10 @@ export async function GET() {
   });
 
   const emocionesPorDia: (string | null)[] = Array(7).fill(null);
-  quizzes.forEach((quiz) => {
+  quizzes.forEach((quiz: any) => {
     const quizDate = new Date(quiz.date);
     const dayIdx = quizDate.getDay(); 
-    emocionesPorDia[dayIdx] = quiz.mainEmotion;
+    emocionesPorDia[dayIdx] = quiz.mainEmotion ?? null;
   });
 
   return NextResponse.json({ quizWeek: emocionesPorDia });

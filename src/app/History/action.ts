@@ -26,7 +26,7 @@ export async function getUserChats() {
   });
 
   // Formatea para el frontend
-  return chats.map((chat) => ({
+  return chats.map((chat: any) => ({
     id: chat.id,
     firstMessage: chat.messages[0]?.text ?? "(Sin mensajes)",
     createdAt: chat.createdAt,
