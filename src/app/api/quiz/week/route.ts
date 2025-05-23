@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/db";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
+import { Quiz } from "@/generated/prisma";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
@@ -36,7 +37,7 @@ export async function GET() {
   });
 
   const emocionesPorDia: (string | null)[] = Array(7).fill(null);
-  quizzes.forEach((quiz) => {
+  quizzes.forEach((quiz: Quiz) => {
     const quizDate = new Date(quiz.date);
     const dayIdx = quizDate.getDay(); 
     emocionesPorDia[dayIdx] = quiz.mainEmotion;
