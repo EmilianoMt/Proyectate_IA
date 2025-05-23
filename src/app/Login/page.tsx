@@ -8,7 +8,7 @@ const Login = () => {
       <div className="flex flex-row gap-12">
         <div className="flex items-center justify-center">
           <Image
-            src="/icon.svg"
+            src="/Icon.svg"
             width={500}
             height={500}
             alt="Picture of the author"
