@@ -2,6 +2,7 @@
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import prisma from "@/libs/db";
+import { Chat } from "@/types/chat";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
@@ -26,7 +27,7 @@ export async function getUserChats() {
   });
 
   // Formatea para el frontend
-  return chats.map((chat: any) => ({
+  return chats.map((chat: Chat) => ({
     id: chat.id,
     firstMessage: chat.messages[0]?.text ?? "(Sin mensajes)",
     createdAt: chat.createdAt,

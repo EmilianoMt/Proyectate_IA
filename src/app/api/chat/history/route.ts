@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/db";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
+import { Chat } from "@/types/chat";
 
 const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
@@ -38,7 +39,7 @@ export async function GET(request: Request) {
   });
 
   return NextResponse.json({
-    chats: chats.map((chat: any) => ({
+    chats: chats.map((chat: Chat) => ({
       id: chat.id,
       firstMessage: chat.messages[0]?.text ?? "(Sin mensajes)",
       createdAt: chat.createdAt,
